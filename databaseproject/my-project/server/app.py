@@ -291,6 +291,8 @@ def edit_data():
             # Define defense stats columns
             defense_columns = ['sacks', 'interceptions', 'touchdowns', 'tackles_for_loss', 'total_tackles', 'stuffs']
             record_columns = ['standing', 'record']
+            coach_columns = ['coach_f_Name', 'coach_l_Name']
+            owner_columns = ['owner_f_Name', 'coach_l_Name']
 
             # Separate Team and Defense fields
             team_fields = {k: v for k, v in data.items() if k not in defense_columns and k not in record_columns and k not in ['originalTeamID']}
@@ -397,33 +399,10 @@ def insert_team():
     try:
         data = request.get_json()
         print(data)
-        if not data:
-            return jsonify({
-                'success': False,
-                'message': 'No data provided'
-            }), 400
-        conn = get_db_connection()
-        cursor = conn.cursor(dictionary=True)
-        query = 'DELETE FROM '
-        if 'playerID' in data:
-            identifier = 'playerID'
-            identifierval = data[identifier]
-            tableName = 'Player'
-        elif 'teamID' in data:
-            identifier = 'teamID'
-            identifierval = data[identifier]
-            tableName = 'Team'
-        else:
-            return jsonify({
-                'success': False,
-                'message': 'Neither playerID nor teamID provided'
-            }), 400
-        query += f'{tableName} WHERE {identifier} = {identifierval}'
-        cursor.execute(query)
-        conn.commit()
+        
         return jsonify({
             'success': True,
-            'message': f'Record with {identifier} {identifierval} deleted successfully'
+            'message': f'Record inserted successfully!'
         })
 
     except Error as e:

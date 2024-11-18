@@ -203,6 +203,7 @@ export default function HomePage() {
                 [name]: value
             }));
         }
+        console.log('changed: ', name, ' ', value);
     };
 
     const handleInsertChange = (e) => {
@@ -212,6 +213,7 @@ export default function HomePage() {
                 ...prev,
                 [name]: value
             }));
+            console.log('changed: ', name, ' ', value);
         } else if(insertType === 'Player') {
             if(name=='team_ID') {
                 setInsertPlayerVals(prev => ({
@@ -303,6 +305,7 @@ export default function HomePage() {
                     params: filters,
                 });
             }
+            console.log('params: ', filters);
             setSearchResults(response.data);
             setSelectedResult(null); // Clear previously selected result
         } catch (error) {
@@ -532,7 +535,7 @@ export default function HomePage() {
                                         className="p-3 rounded-md shadow-md w-full max-w-md"
                                     />
                                     <input
-                                        type="number"
+                                        type="text"
                                         name="coachID"
                                         value={insertTeamVals.coachID}
                                         onChange={handleInsertChange}
